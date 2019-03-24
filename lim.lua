@@ -93,7 +93,7 @@ end
 
 metro = require 'metro'
 
---ENGINE/SCREEN----------------------------------------------------------------
+--ENGINE/HARDWARE-------------------------------------------------------------
 
 engine = {}
 engine.name = "ronald xavier"
@@ -111,6 +111,16 @@ screen = {}
 setmetatable(screen, screen)
 
 function screen.__index(self, command)
+    return function (...)
+        output(command, unpack(arg))
+    end
+end
+
+mix = {}
+
+setmetatable(mix, mix)
+
+function mix.__index(self, command)
     return function (...)
         output(command, unpack(arg))
     end
