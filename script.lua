@@ -342,7 +342,7 @@ function redraw()
         screen.move(n_val.x + r_val.radius, n_val.y)
         first_ripple = false
       end
-      screen.level(math.max(1,math.floor(r_val.life * 15 + 0.5)))
+      screen.level(math.max(1,math.floor(r_val.life * 15 + 0.5))) --!! attempt to concatenate 'first_ripple (a boolean value)'
       screen.circle(n_val.x, n_val.y, r_val.radius)
       screen.stroke()
     end

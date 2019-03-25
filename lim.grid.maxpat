@@ -181,7 +181,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 346.0, 501.0, 50.0, 62.0 ],
-					"text" : "/monome/grid/key 4 2 0"
+					"text" : "/monome/grid/key 6 3 0"
 				}
 
 			}

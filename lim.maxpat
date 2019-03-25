@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 907.0, 504.0, 499.0, 310.0 ],
+		"rect" : [ 627.0, 504.0, 450.0, 310.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -161,12 +161,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-5",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 6.0, 134.0, 50.0, 22.0 ],
-					"text" : "foo 5 6"
+					"patching_rect" : [ 6.0, 134.0, 50.0, 35.0 ],
+					"text" : "cutRel 1"
 				}
 
 			}
