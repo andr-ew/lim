@@ -36,11 +36,12 @@ local MAX_NUM_VOICES = 16
 engine.name = 'PolySub'
 
 -- pythagorean minor/major, kinda
-local ratios = { 1, 9/8, 6/5, 5/4, 4/3, 3/2, 27/16, 16/9 }
-local base = 27.5 -- low A
+local ratios = { 0, 2, 5, 7, 9 }
+local base = 18.35 / 2 -- low D
 
 local function getHz(deg,oct)
-  return base * ratios[deg] * (2^oct)
+  --print(base * (2^(ratios[((deg - 1) % 5) + 1] / 12)) * (oct + 1), oct + 1)
+  return base * (2^(ratios[((deg - 1) % 5) + 1] / 12)) * 2^(oct + math.floor(deg / 5) + 1)
 end
 
 local function getHzET(note)
@@ -110,21 +111,21 @@ function init()
 
   if g then gridredraw() end
 
-  screen_refresh_metro = metro.init()
-  screen_refresh_metro.event = function(stage)
-    update()
-    redraw()
-  end
-  screen_refresh_metro:start(1 / screen_framerate)
-
-  local startup_ani_count = 1
-  local startup_ani_metro = metro.init()
-  startup_ani_metro.event = function(stage)
-    start_screen_note(-startup_ani_count)
-    stop_screen_note(-startup_ani_count)
-    startup_ani_count = startup_ani_count + 1
-  end
-  startup_ani_metro:start( 0.1, 3 )
+--  screen_refresh_metro = metro.init()
+--  screen_refresh_metro.event = function(stage)
+--    update()
+--    redraw()
+--  end
+--  screen_refresh_metro:start(1 / screen_framerate)
+--
+--  local startup_ani_count = 1
+--  local startup_ani_metro = metro.init()
+--  startup_ani_metro.event = function(stage)
+--    start_screen_note(-startup_ani_count)
+--    stop_screen_note(-startup_ani_count)
+--    startup_ani_count = startup_ani_count + 1
+--  end
+--  startup_ani_metro:start( 0.1, 3 )
   
 
 end
@@ -187,9 +188,9 @@ function grid_note(e)
   local note = ((7-e.y)*5) + e.x
   if e.state > 0 then
     if nvoices < MAX_NUM_VOICES then
-      --engine.start(id, getHz(x, y-1))
+      engine.start(e.id, getHz(e.x, e.y-1))
       --print("grid > "..id.." "..note)
-      engine.start(e.id, getHzET(note))
+      --engine.start(e.id, getHzET(note))
       start_screen_note(note)
       lit[e.id] = {}
       lit[e.id].x = e.x
@@ -211,9 +212,9 @@ function grid_note_trans(e)
   local note = ((7-e.y+(root.y-trans.y))*5) + e.x + (trans.x-root.x)
   if e.state > 0 then
     if nvoices < MAX_NUM_VOICES then
-      --engine.start(id, getHz(x, y-1))
+      engine.start(e.id, getHz(e.x, e.y-1))
       --print("grid > "..id.." "..note)
-      engine.start(e.id, getHzET(note))
+      --engine.start(e.id, getHzET(note))
       start_screen_note(note)
       lit[e.id] = {}
       lit[e.id].x = e.x + trans.x - root.x

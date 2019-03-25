@@ -73,13 +73,12 @@ end
 
 midi = require 'midi.5.1'
 
-function midi_from_max (data)
-    if max_free then
-        max_free = false
-        norns.midi.event(74, data)
-        max_free = true
-    end
-end
+--function midi_from_max (data)
+--    if max_free then
+--        max_free = false
+--        max_free = true
+--    end
+--end
 
 norns.midi.add(74, "max", "max")
 
@@ -102,13 +101,13 @@ function metro_to_max (...)
     outlet(0, "metro", ...)
 end
 
-function metro_from_max (idx, stage)
-    if max_free then
-        max_free = false
-        norns.metro(idx, stage)
-        max_free = true
-    end
-end
+--function metro_from_max (idx, stage)
+--    if max_free then
+--        max_free = false
+--        norns.metro(idx, stage)
+--        max_free = true
+--    end
+--end
 
 metro = require 'metro'
 
@@ -161,13 +160,13 @@ paramset = require 'paramset'
 
 params = paramset.new()
 
-function param_from_max (index, v)
-    if max_free then
-        max_free = false
-        params:set(index, v)
-        max_free = true
-    end
-end
+--function param_from_max (index, v)
+--    if max_free then
+--        max_free = false
+--        params:set(index, v)
+--        max_free = true
+--    end
+--end
 
 --GRID-------------------------------------------------------------------------
 
@@ -233,19 +232,19 @@ end
 --    grid_inputs[arg[1]][arg[2]](n)
 --end
 
-function monome_from_max (source, ...)
-    if max_free then
-        max_free = false
-
-        if(source == "menu") then
-            monome_instance:menu(unpack(arg))
-        elseif (source == "osc") then
-            monome_instance:osc(unpack(arg))
-        end
-        
-        max_free = true
-    end
-end
+--function monome_from_max (source, ...)
+--    if max_free then
+--        max_free = false
+--
+--        if(source == "menu") then
+--            monome_instance:menu(unpack(arg))
+--        elseif (source == "osc") then
+--            monome_instance:osc(unpack(arg))
+--        end
+--        
+--        max_free = true
+--    end
+--end
 
 Monome = {
     prefix = "",
@@ -480,4 +479,19 @@ function Grid:parse (...)
         --print(arg[2] + 1, arg[3] + 1, arg[4])
         self.key(arg[2] + 1, arg[3] + 1, arg[4])
     end
+end
+
+--INPUT------------------------------------------------------------------------
+
+function from_max (i, ...)
+--        print(i, unpack(arg))
+    local inputs = {
+        norns.metro,
+        function (...) norns.midi.event(74, unpack(arg)) end,
+        function (...) monome_instance:osc(unpack(arg)) end,
+        function (...) monome_instance:menu(unpack(arg)) end,
+        function (...) params:set(unpack(arg)) end
+    }
+    
+    inputs[i + 1](unpack(arg))
 end
