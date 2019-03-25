@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 249.0, 120.0, 647.0, 574.0 ],
+		"rect" : [ 687.0, 109.0, 647.0, 574.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -152,13 +152,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-31",
-					"linecount" : 2,
+					"linecount" : 9,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 346.0, 501.0, 50.0, 35.0 ],
-					"text" : "/sys/rotation 0"
+					"patching_rect" : [ 346.0, 501.0, 50.0, 129.0 ],
+					"text" : "/serialosc/device m0000046 \"monome 128\" 16335"
 				}
 
 			}
@@ -313,20 +313,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 98.0, 514.0, 103.0, 22.0 ],
-					"text" : "prepend monome"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-17",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 98.0, 543.0, 109.0, 22.0 ],
-					"text" : "prepend grid_input"
+					"patching_rect" : [ 98.0, 514.0, 163.0, 22.0 ],
+					"text" : "prepend monome_from_max"
 				}
 
 			}
@@ -373,7 +361,7 @@
 					"fontname" : "Inconsolata Regular",
 					"fontsize" : 10.0,
 					"id" : "obj-29",
-					"items" : [ "none", ",", "m0000046", "monome 128", ",", "m0000046", "monome 128" ],
+					"items" : "none",
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -382,7 +370,7 @@
 					"patching_rect" : [ 98.0, 432.0, 125.0, 19.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 0.0, 0.0, 121.0, 19.0 ],
-					"textcolor" : [ 1.0, 1.0, 1.0, 1.0 ]
+					"textcolor" : [ 1.0, 1.0, 1.0, 0.3 ]
 				}
 
 			}
@@ -916,13 +904,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
-					"source" : [ "obj-17", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-17", 0 ],
 					"source" : [ "obj-18", 0 ]
 				}
 

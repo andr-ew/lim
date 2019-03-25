@@ -19,9 +19,12 @@ function require (file)
     end
 end
 
-
 function loadbang ()
 	init()
+end
+
+function get_time ()
+    return os.clock(), 0
 end
 
 util = require 'util'
@@ -91,8 +94,6 @@ function metro_to_max (...)
 end
 
 function metro_from_max (idx, stage)
-    --print("tick", idx, stage)
-    
     norns.metro(idx, stage)
 end
 
@@ -117,7 +118,7 @@ setmetatable(screen, screen)
 
 function screen.__index(self, command)
     return function (...)
-        output(command, unpack(arg))
+        --output(command, unpack(arg))
     end
 end
 
@@ -126,6 +127,16 @@ mix = {}
 setmetatable(mix, mix)
 
 function mix.__index(self, command)
+    return function (...)
+        output(command, unpack(arg))
+    end
+end
+
+file = {}
+
+setmetatable(file, file)
+
+function file.__index(self, command)
     return function (...)
         output(command, unpack(arg))
     end
@@ -177,30 +188,40 @@ focus = function (i)
     end
 end
 
-grid_input = function (...)
-    local grid_inputs = {
-        monome = {
-            osc = function (n)
-                if monome_instance then
-                    monome_instance:osc(n)
-                end
-            end,
-            menu = function (n)
-                if monome_instance then
-                    monome_instance:menu(n)
-                end
-            end
-        }
-    }
-    
-    local n = {}
-    for i,v in ipairs(arg) do
-        if i>2 then
-            n[i-2] = v
-        end
+--grid_input = function (...)
+--    local grid_inputs = {
+--        monome = {
+--            osc = function (n)
+--                if monome_instance then
+--                    monome_instance:osc(n)
+--                end
+--            end,
+--            menu = function (n)
+--                if monome_instance then
+--                    monome_instance:menu(n)
+--                end
+--            end
+--        }
+--    }
+--    
+--    print(...)
+--    
+--    local n = {}
+--    for i,v in ipairs(arg) do
+--        if i>2 then
+--            n[i-2] = v
+--        end
+--    end
+--    
+--    grid_inputs[arg[1]][arg[2]](n)
+--end
+
+function monome_from_max (source, ...)
+    if(source == "menu") then
+        monome_instance:menu(unpack(arg))
+    elseif (source == "osc") then
+        monome_instance:osc(unpack(arg))
     end
-    
-    grid_inputs[arg[1]][arg[2]](n)
 end
 
 Monome = {
@@ -253,14 +274,13 @@ function Monome:rescan ()
     end
 end
 
-function Monome:osc (n)
+function Monome:osc (...)
     --print(n[1], n[2], n[3])
-    
-    if n[1] == "/serialosc/device" then
-        outlet(0, "monome", 3, "append", n[2], n[3])
-		self.ports[#self.ports + 1] = n[4]
-		self.devices[#self.devices + 1] = n[3]
-		self.serials[#self.serials + 1] = n[2]
+    if arg[1] == "/serialosc/device" then
+        outlet(0, "monome", 3, "append", arg[2], arg[3])
+		self.ports[#self.ports + 1] = arg[4]
+		self.devices[#self.devices + 1] = arg[3]
+		self.serials[#self.serials + 1] = arg[2]
         
         if self.autoconnect == 1 and self.enabled then
             outlet(0, "monome", 3, 1)
@@ -275,25 +295,23 @@ function Monome:osc (n)
                 end
             end
         end
-    elseif n[1] == "/serialosc/remove" or n[1] == "/serialosc/add" then
+    elseif arg[1] == "/serialosc/remove" or arg[1] == "/serialosc/add" then
         if self.enabled then self:rescan() end
-    elseif n[1] == "/sys/port" and n[2] ~= self.in_port then
+    elseif arg[1] == "/sys/port" and arg[2] ~= self.in_port then
         outlet(0, "monome", 3, "set", 0)
 		outlet(0, "monome", 3, "textcolor", 1.0, 1.0, 1.0, 0.3)
 		self.connected = 0
 		self.device = 0
-    elseif n[1] == "/sys/size" then
+    elseif arg[1] == "/sys/size" then
         self.device_size = {}
-		self.device_size[1] = n[2]
-		self.device_size[2] = n[3]
+		self.device_size[1] = arg[2]
+		self.device_size[2] = arg[3]
     else
-        if self.enabled then self:parse(n) end
+        if self.enabled and self.parse ~= nil then self:parse(unpack(arg)) end
     end
 end
 
-function Monome:menu (i)
-    i = i[1]
-    
+function Monome:menu (i, ...)
     if self.enabled then
         if i ~= 0 then
             self.index = i
@@ -335,7 +353,7 @@ function Monome:reconnect ()
     self:onreconnect()
 end
 
-function Monome:parse (n) end
+--function Monome:parse (n) end
         
 function Monome:mute (i)
     self.enabled = not i
@@ -360,10 +378,10 @@ function Monome:focus (i)
 end
 
 mtrx = {}
-for x=0, 15 do
+for x=1, 16 do
     mtrx[x] = {}
 
-    for y=0, 15 do
+    for y=1, 16 do
         mtrx[x][y] = 0
     end
 end
@@ -377,10 +395,10 @@ Grid = Monome:new({
         )
 
 function Grid:all (z)
-    for x=0, 15 do
+    for x=1, 16 do
         self.matrix[x] = {}
         
-        for y=0, 15 do
+        for y=1, 16 do
             self.matrix[x][y] = z
         end
     end
@@ -404,7 +422,7 @@ function Grid:refresh ()
                 for x=0, 7 do
                     --print(self.matrix[x + self.quad_off[i][1]][y + self.quad_off[i][2]])
                     
-                    quad_mess[(y * 8) + x + 4] = self.matrix[x + self.quad_off[i][1]][y + self.quad_off[i][2]]
+                    quad_mess[(y * 8) + x + 4] = self.matrix[x + 1 + self.quad_off[i][1]][y + 1 + self.quad_off[i][2]]
                 end
             end
             
@@ -413,16 +431,6 @@ function Grid:refresh ()
         end
     else
         --run this function again in 1ms ?
-    end
-end
-        
-function Grid:parse (n)
-    if n ~= nil then
-        if n[1] == "/monome/grid/key" then
-            self:event(n[2], n[3], n[4])
-        end
-    else 
-        self:refresh()
     end
 end
         
@@ -444,9 +452,9 @@ function Grid:mute (i)
     end
 end
 
-function Grid:parse (n)
-    if n[1] == "/monome/grid/key" and self.key ~= nil then
-        --print(n[2], n[3], n[4])
-        self.key(n[2], n[3], n[4])
+function Grid:parse (...)
+    if arg[1] == "/monome/grid/key" and self.key ~= nil and arg.n == 4 then
+        --print(arg[2] + 1, arg[3] + 1, arg[4])
+        self.key(arg[2] + 1, arg[3] + 1, arg[4])
     end
 end

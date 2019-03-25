@@ -137,13 +137,12 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-5",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 6.0, 134.0, 50.0, 35.0 ],
-					"text" : "line_width 1"
+					"patching_rect" : [ 6.0, 134.0, 50.0, 22.0 ],
+					"text" : "update"
 				}
 
 			}

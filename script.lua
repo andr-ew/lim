@@ -23,11 +23,8 @@ function init ()
 
 	params:add_control("shape", "shape", controlspec.new(0,1,"lin",0,0,""))
 	params:set_action("shape", function(x) engine.shape(x) end)
-
-	met = metro.alloc(function() print "event" end,1,3)
-	met.time = 1000
-	met:start()
 	
-	pat = pattern_time.new()
-  	pat.process = function (e) end
+	screen_refresh_metro = metro.init() --bug starts here
+	screen_refresh_metro.event = function() end
+	screen_refresh_metro:start(1 / 15)
 end

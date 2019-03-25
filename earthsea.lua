@@ -227,17 +227,17 @@ function grid_note_trans(e)
 end
 
 function gridredraw()
-  g:all(0)
-  g:led(1,1,2 + pat.rec * 10)
-  g:led(1,2,2 + pat.play * 10)
-  g:led(1,8,2 + mode_transpose * 10)
-
-  if mode_transpose == 1 then g:led(trans.x, trans.y, 4) end
-  for i,e in pairs(lit) do
-    g:led(e.x, e.y,15)
-  end
-
-  g:refresh()
+--  g:all(0)
+--  g:led(1,1,2 + pat.rec * 10)
+--  g:led(1,2,2 + pat.play * 10)
+--  g:led(1,8,2 + mode_transpose * 10)
+--
+--  if mode_transpose == 1 then g:led(trans.x, trans.y, 4) end
+--  for i,e in pairs(lit) do
+--    g:led(e.x, e.y,15)
+--  end
+--
+--  g:refresh()
 end
 
 
