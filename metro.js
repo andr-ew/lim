@@ -13,7 +13,7 @@ for(var i =0; i < num_metros; i++) {
 	var a = metros[i];
 	
 	metros[i].task = new Task(function (m) {
-		outlet(0, m.id, arguments.callee.task.iterations + m.init_stage - 1);
+		outlet(0, m.id, (arguments.callee.task.iterations + m.init_stage - 1) % 2147483647);
 	}, this, a);
 }
 

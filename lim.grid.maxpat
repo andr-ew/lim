@@ -175,13 +175,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-31",
-					"linecount" : 9,
+					"linecount" : 4,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 346.0, 501.0, 50.0, 129.0 ],
-					"text" : "/serialosc/device m0000046 \"monome 128\" 16335"
+					"patching_rect" : [ 346.0, 501.0, 50.0, 62.0 ],
+					"text" : "/monome/grid/key 4 2 0"
 				}
 
 			}
@@ -284,7 +284,7 @@
 				"box" : 				{
 					"comment" : "",
 					"id" : "obj-3",
-					"index" : 0,
+					"index" : 1,
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
@@ -296,7 +296,7 @@
 				"box" : 				{
 					"comment" : "",
 					"id" : "obj-1",
-					"index" : 0,
+					"index" : 1,
 					"maxclass" : "inlet",
 					"numinlets" : 0,
 					"numoutlets" : 1,
@@ -381,7 +381,7 @@
 					"patching_rect" : [ 98.0, 432.0, 125.0, 19.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 0.0, 0.0, 121.0, 19.0 ],
-					"textcolor" : [ 1.0, 1.0, 1.0, 0.3 ]
+					"textcolor" : [ 1.0, 1.0, 1.0, 1.0 ]
 				}
 
 			}
@@ -986,16 +986,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-17", 0 ],
-					"order" : 0,
-					"source" : [ "obj-33", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
-					"order" : 1,
 					"source" : [ "obj-33", 0 ]
 				}
 
@@ -1184,16 +1175,7 @@
 				}
 
 			}
- ],
-		"dependency_cache" : [ 			{
-				"name" : "metro.js",
-				"bootpath" : "~/Documents/code/lim",
-				"patcherrelativepath" : ".",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
- ],
-		"autosave" : 0
+ ]
 	}
 
 }

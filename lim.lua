@@ -26,7 +26,10 @@ function loadbang ()
 end
 
 function get_time ()
-    return os.clock(), 0
+    local s = os.clock() * 10
+    local f = math.floor(s)
+    print(f, (s - f) * 1000000)
+    return f, (s - f) * 1000000
 end
 
 util = require 'util'
@@ -419,7 +422,7 @@ function Grid:all (z)
         self.matrix[x] = {}
         
         for y=1, 16 do
-            self.matrix[x][y] = z
+            self.matrix[x][y] = z --attempt to concatenate a function value ??
         end
     end
 end
