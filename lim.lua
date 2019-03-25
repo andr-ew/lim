@@ -19,6 +19,10 @@ function require (file)
     end
 end
 
+function get_time ()
+    return 0, 0
+end
+
 util = require 'util'
 tab = require 'tabutil'
 controlspec = require 'controlspec'
