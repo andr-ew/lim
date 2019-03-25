@@ -17,7 +17,6 @@ g.key = function (x, y, z)
 	end
 end
 
-
 function init ()
 	m = midi.connect()
   	m.event = function(data) m:send(data) end
@@ -28,4 +27,7 @@ function init ()
 	met = metro.alloc(function() print "event" end,1,3)
 	met.time = 1000
 	met:start()
+	
+	pat = pattern_time.new()
+  	pat.process = function (e) end
 end

@@ -19,6 +19,11 @@ function require (file)
     end
 end
 
+
+function loadbang ()
+	init()
+end
+
 util = require 'util'
 tab = require 'tabutil'
 controlspec = require 'controlspec'
@@ -147,10 +152,6 @@ grid = {
 		return monome_instance
 	end
 }
-
-loadbang = function ()
-	init()
-end
 
 mute = function (i)
     if monome_instance then
