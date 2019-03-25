@@ -68,7 +68,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 486.20001220703125, 122.0, 73.0, 22.0 ],
+					"patching_rect" : [ 513.81817626953125, 129.0, 73.0, 22.0 ],
 					"text" : "route param"
 				}
 
@@ -92,8 +92,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 374.0, 198.600006103515625, 106.0, 22.0 ],
-					"text" : "compile, loadbang"
+					"patching_rect" : [ 406.0, 203.0, 50.0, 22.0 ],
+					"text" : "compile"
 				}
 
 			}
@@ -141,13 +141,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-31",
-					"linecount" : 4,
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 346.0, 501.0, 50.0, 62.0 ],
-					"text" : "/monome/grid/key 6 6 0"
+					"patching_rect" : [ 346.0, 501.0, 50.0, 35.0 ],
+					"text" : "/sys/rotation 0"
 				}
 
 			}
@@ -181,7 +181,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 12.333335876464844, 129.0, 84.0, 22.0 ],
+					"patching_rect" : [ 372.0, 145.0, 84.0, 22.0 ],
 					"text" : "read script.lua"
 				}
 
@@ -193,7 +193,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 486.111114501953125, 153.0, 150.0, 22.0 ],
+					"patching_rect" : [ 513.729248046875, 160.0, 150.0, 22.0 ],
 					"text" : "prepend param_from_max"
 				}
 
@@ -229,7 +229,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 35.0, 169.600006103515625, 58.0, 22.0 ],
+					"patching_rect" : [ 278.0, 213.600006103515625, 58.0, 22.0 ],
 					"text" : "loadbang"
 				}
 
@@ -238,11 +238,11 @@
 				"box" : 				{
 					"id" : "obj-6",
 					"maxclass" : "newobj",
-					"numinlets" : 11,
-					"numoutlets" : 11,
-					"outlettype" : [ "", "", "", "", "", "", "", "", "", "", "" ],
-					"patching_rect" : [ 92.000015258789062, 92.0, 457.0, 22.0 ],
-					"text" : "routepass open compile mute disconnect reconnect focus read loadbang midi param"
+					"numinlets" : 12,
+					"numoutlets" : 12,
+					"outlettype" : [ "", "", "", "", "", "", "", "", "", "", "", "" ],
+					"patching_rect" : [ 92.000015258789062, 92.0, 483.0, 22.0 ],
+					"text" : "routepass open compile mute disconnect reconnect focus read loadbang midi load param"
 				}
 
 			}
@@ -981,16 +981,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-15", 0 ],
-					"order" : 1,
-					"source" : [ "obj-30", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
-					"order" : 0,
 					"source" : [ "obj-30", 0 ]
 				}
 
@@ -1012,7 +1003,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-21", 0 ],
-					"order" : 2,
+					"order" : 3,
 					"source" : [ "obj-35", 0 ]
 				}
 
@@ -1028,7 +1019,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-30", 0 ],
-					"order" : 3,
+					"order" : 2,
 					"source" : [ "obj-35", 0 ]
 				}
 
@@ -1057,8 +1048,8 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-35", 0 ],
-					"source" : [ "obj-5", 0 ]
+					"destination" : [ "obj-15", 0 ],
+					"source" : [ "obj-6", 9 ]
 				}
 
 			}
@@ -1129,7 +1120,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-4", 0 ],
-					"source" : [ "obj-6", 9 ]
+					"source" : [ "obj-6", 10 ]
 				}
 
 			}
@@ -1144,7 +1135,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-7", 0 ],
-					"source" : [ "obj-6", 10 ]
+					"source" : [ "obj-6", 11 ]
 				}
 
 			}

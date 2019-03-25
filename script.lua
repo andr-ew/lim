@@ -17,6 +17,7 @@ g.key = function (x, y, z)
 	end
 end
 
+
 function init ()
 	m = midi.connect()
   	m.event = function(data) m:send(data) end
@@ -24,18 +25,7 @@ function init ()
 	params:add_control("shape", "shape", controlspec.new(0,1,"lin",0,0,""))
 	params:set_action("shape", function(x) engine.shape(x) end)
 
-	pat = pattern_time.new()
-	pat.process = function (e) end
-	
-	pat:clear()
-	pat:rec_start()
-	local e = {}
-	e.id = 1
-      e.x = 2
-      e.y = 3
-      e.state = 4
-      pat:watch(e)
-	pat:rec_stop()
-	pat:start()
-	pat:stop()
+	met = metro.alloc(function() print "event" end,1,3)
+	met.time = 1000
+	met:start()
 end
