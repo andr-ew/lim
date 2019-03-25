@@ -1,6 +1,8 @@
 this.inlets = 1
 this.outlets = 1
 
+max_free = true
+
 norns = {}
 norns.metro = function (...) end
 norns.version = { metro = "" }
@@ -69,7 +71,11 @@ end
 midi = require 'midi.5.1'
 
 function midi_from_max (data)
-    norns.midi.event(74, data)
+    if max_free then
+        max_free = false
+        norns.midi.event(74, data)
+        max_free = true
+    end
 end
 
 norns.midi.add(74, "max", "max")
@@ -94,7 +100,11 @@ function metro_to_max (...)
 end
 
 function metro_from_max (idx, stage)
-    norns.metro(idx, stage)
+    if max_free then
+        max_free = false
+        norns.metro(idx, stage)
+        max_free = true
+    end
 end
 
 metro = require 'metro'
@@ -149,7 +159,11 @@ paramset = require 'paramset'
 params = paramset.new()
 
 function param_from_max (index, v)
-    params:set(index, v)
+    if max_free then
+        max_free = false
+        params:set(index, v)
+        max_free = true
+    end
 end
 
 --GRID-------------------------------------------------------------------------
@@ -217,10 +231,16 @@ end
 --end
 
 function monome_from_max (source, ...)
-    if(source == "menu") then
-        monome_instance:menu(unpack(arg))
-    elseif (source == "osc") then
-        monome_instance:osc(unpack(arg))
+    if max_free then
+        max_free = false
+
+        if(source == "menu") then
+            monome_instance:menu(unpack(arg))
+        elseif (source == "osc") then
+            monome_instance:osc(unpack(arg))
+        end
+        
+        max_free = true
     end
 end
 

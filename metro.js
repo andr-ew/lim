@@ -22,8 +22,8 @@ function metro_start(id, time, count, init_stage) {
 	m.id = id;
  	m.init_stage = init_stage;
 
-	m.task.interval = time;
-	m.task.repeat(count - 1, time);
+	m.task.interval = time * 1000;
+	m.task.repeat(count - 1, time * 1000);
 }
 
 function metro_stop(id) {
@@ -31,5 +31,14 @@ function metro_stop(id) {
 }
 
 function metro_set_time(id, time) {
-	metros[id].task.interval = time;
+	metros[id].task.interval = time * 1000;
+}
+
+function freebang() {
+    for(var i =0; i < num_metros; i++) {
+        metros[i].task.cancel();
+        metros[i].task = null;
+
+		metros[i] = {}
+    }
 }

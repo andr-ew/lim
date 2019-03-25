@@ -24,7 +24,7 @@ function init ()
 	params:add_control("shape", "shape", controlspec.new(0,1,"lin",0,0,""))
 	params:set_action("shape", function(x) engine.shape(x) end)
 	
-	screen_refresh_metro = metro.init() --bug starts here
-	screen_refresh_metro.event = function() end
-	screen_refresh_metro:start(1 / 15)
+	screen_refresh_metro = metro.init() 
+	screen_refresh_metro.event = function () end
+	screen_refresh_metro:start(1 / 15) --bug starts here
 end
