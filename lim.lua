@@ -427,7 +427,7 @@ function Grid:all (z)
 end
         
 function Grid:led (x, y, z)
-    self.matrix[x][y] = z
+    self.matrix[x][y] = z --attempt to index '?' (nil value)
 end
         
 function Grid:refresh ()
