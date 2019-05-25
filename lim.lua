@@ -85,21 +85,18 @@ norns.midi.add(74, "max", "max")
 
 --METRO------------------------------------------------------------------------
 
-function metro_start (id, time, count, init_stage)
-    metro_to_max("metro_start", id, time, count, init_stage)
-end
-
-function metro_stop (id)
-    metro_to_max("metro_stop", id)
-end
-
-function metro_set_time (id, time)
-    metro_to_max("metro_set_time", id, time)
-end
-
-function metro_to_max (...)
-    outlet(0, "metro", ...)
-end
+--function metro_start (id, time, count, init_stage)
+--    metro_to_max("metro_start", id, time, count, init_stage)
+--end
+--
+--function metro_stop (id)
+--    metro_to_max("metro_stop", id)
+--end
+--
+--function metro_set_time (id, time)
+--    metro_to_max("metro_set_time", id, time)
+--end
+--
 
 --function metro_from_max (idx, stage)
 --    if max_free then
@@ -108,6 +105,49 @@ end
 --        max_free = true
 --    end
 --end
+
+lim_metros = {}
+
+for i=1, 36 do
+    lim_metros[i] = {
+        time = 1,
+        count = 1,
+        stage = 0,
+        started = false
+    }
+end
+
+function metro_start (id, time, count, init_stage)
+    lim_metros[id].time = math.floor(time * 1000) / 1000
+    lim_metros[id].count = count
+    lim_metros[id].stage =  init_stage
+    lim_metros[id].started = true
+end
+
+function metro_stop (id)
+    lim_metros[id].started = false
+end
+
+function metro_set_time (id, time)
+    lim_metros[id].time = math.floor(time * 1000) / 1000
+end
+
+
+function metro_from_max (count)
+    for i=1, 36 do
+        if lim_metros[i].started and count % (lim_metros[i].time * 1000) == 0 then
+            
+            if lim_metros[i].count > -1 and lim_metros[i].stage > lim_metros[i].count then
+                metro_stop(i)
+            else
+                lim_metros[i].stage = lim_metros[i].stage + 1
+            
+                norns.metro(i, lim_metros[i].stage)
+            end
+        end
+    end
+end
+
 
 metro = require 'metro'
 
@@ -483,15 +523,45 @@ end
 
 --INPUT------------------------------------------------------------------------
 
+
+function from_max(...)
+    return function(...) coroutine.resume(cr, unpack(arg)) end
+end
+
 function from_max (i, ...)
 --        print(i, unpack(arg))
     local inputs = {
-        norns.metro,
+        metro_from_max,
         function (...) norns.midi.event(74, unpack(arg)) end,
-        function (...) monome_instance:osc(unpack(arg)) end,
-        function (...) monome_instance:menu(unpack(arg)) end,
+        function (...) if(monome_instance) then monome_instance:osc(unpack(arg)) end end,
+        function (...) if(monome_instance) then monome_instance:menu(unpack(arg)) end end,
         function (...) params:set(unpack(arg)) end
     }
     
     inputs[i + 1](unpack(arg))
 end
+
+--------------------------------
+
+--function thingiwanttodo(...) end
+--
+--cr = coroutine.create(function (...)
+--    thingiwanttodo(unpack(arg))
+--    coroutine.yield()
+--end)
+--
+--function from_max(...)
+--    return function(...) coroutine.resume(cr, unpack(arg)) end
+--end
+
+--function thingiwanttodo(...) end
+--
+--function consumer(cr, ...) 
+--    thingiwanttodo(coroutine.resume(cr))
+--end
+--
+--function from_max(...)
+--    return coroutine.create(function (...)
+--        coroutine.yield(consumer(self, arg))
+--    end)
+--end

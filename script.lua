@@ -51,6 +51,13 @@ end
 local nvoices = 0
 
 function init()
+	
+--  test = metro.init(function (s) print("mtest", s) end, 1)
+--  test:start()
+
+--  test2 = metro.init(function (s) print("mtest2", s) end, 4.2)
+--  test2:start()
+
   m = midi.connect()
   m.event = midi_event
 
